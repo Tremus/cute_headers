@@ -491,8 +491,8 @@ static void tls_recv(TLS_Context* ctx)
 				// What a horrid API design... So over-engineered to simply memcpy a buffer.
 				int size = (int)dispatch_data_get_size(content);
 				void* packet = TLS_MALLOC(size);
-				dispatch_data_apply(content, ^bool(dispatch_data_t content, size_t offset, const void* buffer, size_t size) {
-					TLS_MEMCPY((char*)packet + offset, buffer, size);
+				dispatch_data_apply(content, ^bool(dispatch_data_t _content, size_t offset, const void* buffer, size_t _size) {
+					TLS_MEMCPY((char*)packet + offset, buffer, _size);
 					return true;
 				});
 				tls_packet_queue_push(&ctx->q, packet, size);
